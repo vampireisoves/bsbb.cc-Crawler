@@ -23,11 +23,13 @@ jobs:
 
     - name: Run crawler script
       run: |
-        python node-sp/crawler.py
+        cd node-sp
+        python crawler.py
 
     - name: Encode output and save as config.txt
       run: |
-        base64 -w 0 node-sp/nodes.txt > config.txt
+        cd node-sp
+        base64 -w 0 nodes.txt > ../config.txt
 
     - name: Commit and push changes
       run: |
