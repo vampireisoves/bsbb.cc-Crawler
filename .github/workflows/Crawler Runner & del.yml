@@ -40,6 +40,7 @@ jobs:
         git add config.txt README.md
         git commit -m "Update config.txt and README.md with latest crawler output" || echo "No changes to commit"
         git push origin main
+
   del_runs:
     needs: run-crawler
     runs-on: ubuntu-latest
