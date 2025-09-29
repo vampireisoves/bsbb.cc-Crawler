@@ -11,6 +11,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.MY_BLOG_PAT }}
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -33,11 +35,11 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git config user.name "vampireisoves"
+        git config user.email "893751627@qq.com"
         git add config.txt README.md
         git commit -m "Update config.txt and README.md with latest crawler output" || echo "No changes to commit"
-        git push
+        git push origin main
   del_runs:
     needs: run-crawler
     runs-on: ubuntu-latest
