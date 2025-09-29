@@ -215,7 +215,7 @@ class BsbbCrawler:
             readme_content += f"- {country_name}: {count} 个节点\n"
         
         readme_content += "\n## 按协议类型统计\n\n"
-        for protocol, count 在 sorted(analysis_result['protocols'].items()):
+        for protocol, count in sorted(analysis_result['protocols'].items()):
             readme_content += f"- {protocol}: {count} 个节点\n"
         
         # 写入 README.md 文件
