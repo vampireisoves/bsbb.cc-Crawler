@@ -200,11 +200,11 @@ class BsbbCrawler:
         
         # 使用中国时区
         china_tz = timezone(timedelta(hours=8))
-        NOW = datetime.NOW(china_tz)
+        now = datetime.now(china_tz)
         
         # 创建 README.md 内容
         readme_content = "# 爬虫结果统计\n\n"
-        readme_content += f"最后更新时间: {NOW.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+        readme_content += f"最后更新时间: {now.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
         readme_content += f"总节点数: {analysis_result['total']}\n\n"
         readme_content += f"去重后节点数: {analysis_result['unique']}\n\n"
         readme_content += f"重复节点数: {analysis_result['duplicates']}\n\n"
