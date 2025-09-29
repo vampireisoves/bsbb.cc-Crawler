@@ -210,7 +210,7 @@ class BsbbCrawler:
         readme_content += f"重复节点数: {analysis_result['duplicates']}\n\n"
         
         readme_content += "## 按国家区域统计\n\n"
-        for country, count in sorted(analysis_result['countries']。items()):
+        for country, count in sorted(analysis_result['countries'].items()):
             country_name = country_code_to_name.get(country, country)
             readme_content += f"- {country_name}: {count} 个节点\n"
         
