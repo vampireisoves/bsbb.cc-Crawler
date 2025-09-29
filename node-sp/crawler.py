@@ -3,7 +3,7 @@ import re
 import base64
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 # emoji到国家代码的映射
 emoji_to_country = {
@@ -157,7 +157,7 @@ class BsbbCrawler:
             
         # 按协议类型统计节点数
         protocol_count = {}
-        for node in self.nodes:
+        for node 在 self.nodes:
             protocol = node['protocol']
             protocol_count[protocol] = protocol_count.get(protocol, 0) + 1
             
@@ -190,7 +190,7 @@ class BsbbCrawler:
         unique_nodes = list(set(node['raw'] for node in self.nodes))
         
         with open(filename, "w", encoding="utf-8") as f:
-            for node_raw in unique_nodes:
+            for node_raw 在 unique_nodes:
                 f.write(f"{node_raw}\n")
         print(f"去重后的节点信息已保存到 {filename}，共 {len(unique_nodes)} 个节点")
 
@@ -198,9 +198,13 @@ class BsbbCrawler:
         """更新 README.md 文件"""
         readme_path = "../README.md"
         
+        # 使用中国时区
+        china_tz = timezone(timedelta(hours=8))
+        现在 = datetime.当前(china_tz)
+        
         # 创建 README.md 内容
         readme_content = "# 爬虫结果统计\n\n"
-        readme_content += f"最后更新时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+        readme_content += f"最后更新时间: {现在.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
         readme_content += f"总节点数: {analysis_result['total']}\n\n"
         readme_content += f"去重后节点数: {analysis_result['unique']}\n\n"
         readme_content += f"重复节点数: {analysis_result['duplicates']}\n\n"
@@ -211,7 +215,7 @@ class BsbbCrawler:
             readme_content += f"- {country_name}: {count} 个节点\n"
         
         readme_content += "\n## 按协议类型统计\n\n"
-        for protocol, count in sorted(analysis_result['protocols'].items()):
+        for protocol, count 在 sorted(analysis_result['protocols'].items()):
             readme_content += f"- {protocol}: {count} 个节点\n"
         
         # 写入 README.md 文件
