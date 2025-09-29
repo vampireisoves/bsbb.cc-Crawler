@@ -12,7 +12,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        token: ${{ secrets.MY_BLOG_PAT }}
+        token: ${{ secrets.CRAWLER }}
 
     - name: Set up Python
       uses: actions/setup-python@v4
