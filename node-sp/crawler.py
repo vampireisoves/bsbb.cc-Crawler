@@ -157,7 +157,7 @@ class BsbbCrawler:
             
         # 按协议类型统计节点数
         protocol_count = {}
-        for node 在 self.nodes:
+        for node in self.nodes:
             protocol = node['protocol']
             protocol_count[protocol] = protocol_count.get(protocol, 0) + 1
             
