@@ -187,7 +187,7 @@ class BsbbCrawler:
     def save_to_file(self, filename="nodes.txt"):
         """保存节点信息到文件（去重后）"""
         # 去重节点
-        unique_nodes = list(set(node['raw'] for node 在 self.nodes))
+        unique_nodes = list(set(node['raw'] for node in self.nodes))
         
         with open(filename, "w", encoding="utf-8") as f:
             for node_raw in unique_nodes:
