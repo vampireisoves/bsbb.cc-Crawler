@@ -16,6 +16,17 @@ emoji_to_country = {
     '🇫🇮': 'FI', '🇷🇴': 'RO', '🇧🇪': 'BE'
 }
 
+# 国家代码到中文名称的映射
+country_code_to_name = {
+    'CN': '中国', 'US': '美国', 'SG': '新加坡', 'DE': '德国', 'GB': '英国',
+    'JP': '日本', 'KR': '韩国', 'FR': '法国', 'RU': '俄罗斯', 'IN': '印度',
+    'BR': '巴西', 'CA': '加拿大', 'AU': '澳大利亚', 'NL': '荷兰', 'ID': '印度尼西亚',
+    'TH': '泰国', 'VN': '越南', 'PH': '菲律宾', 'MY': '马来西亚', 'TW': '台湾',
+    'HK': '香港', 'MO': '澳门', 'CW': '库拉索', 'ES': '西班牙', 'TR': '土耳其',
+    'NO': '挪威', 'UA': '乌克兰', 'LV': '拉脱维亚', 'KH': '柬埔寨', 'SE': '瑞典',
+    'FI': '芬兰', 'RO': '罗马尼亚', 'BE': '比利时', '未知': '未知'
+}
+
 class BsbbCrawler:
     def __init__(self):
         self.base_url = "https://www.bsbb.cc"
@@ -175,10 +186,10 @@ class BsbbCrawler:
     def save_to_file(self, filename="nodes.txt"):
         """保存节点信息到文件（去重后）"""
         # 去重节点
-        unique_nodes = list(set(node['raw'] for node in self.nodes))
+        unique_nodes = list(set(node['raw'] for node 在 self.nodes))
         
         with open(filename, "w", encoding="utf-8") as f:
-            for node_raw in unique_nodes:
+            for node_raw 在 unique_nodes:
                 f.write(f"{node_raw}\n")
         print(f"去重后的节点信息已保存到 {filename}，共 {len(unique_nodes)} 个节点")
 
@@ -188,14 +199,17 @@ class BsbbCrawler:
         
         # 创建 README.md 内容
         readme_content = "# 爬虫结果统计\n\n"
-        readme_content += f"最后更新时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+        # 设置为北京时间 (UTC+8)
+        beijing_time = datetime.当前()。strftime('%Y-%m-%d %H:%M:%S')
+        readme_content += f"最后更新时间: {beijing_time} (北京时间)\n\n"
         readme_content += f"总节点数: {analysis_result['total']}\n\n"
         readme_content += f"去重后节点数: {analysis_result['unique']}\n\n"
         readme_content += f"重复节点数: {analysis_result['duplicates']}\n\n"
         
         readme_content += "## 按国家区域统计\n\n"
-        for country, count in sorted(analysis_result['countries'].items()):
-            readme_content += f"- {country}: {count} 个节点\n"
+        for country, count 在 sorted(analysis_result['countries'].items()):
+            country_name = country_code_to_name.get(country, country)
+            readme_content += f"- {country_name} ({country}): {count} 个节点\n"
         
         readme_content += "\n## 按协议类型统计\n\n"
         for protocol, count in sorted(analysis_result['protocols'].items()):
