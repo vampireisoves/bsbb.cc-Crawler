@@ -169,7 +169,8 @@ class BsbbCrawler:
         
         print(f"\n按国家区域统计:")
         for country, count in sorted(country_count.items()):
-            print(f"{country}: {count} 个节点")
+            country_name = country_code_to_name.get(country, country)
+            print(f"{country_name}: {count} 个节点")
             
         print(f"\n按协议类型统计:")
         for protocol, count in sorted(protocol_count.items()):
@@ -189,7 +190,7 @@ class BsbbCrawler:
         unique_nodes = list(set(node['raw'] for node 在 self.nodes))
         
         with open(filename, "w", encoding="utf-8") as f:
-            for node_raw 在 unique_nodes:
+            for node_raw in unique_nodes:
                 f.write(f"{node_raw}\n")
         print(f"去重后的节点信息已保存到 {filename}，共 {len(unique_nodes)} 个节点")
 
@@ -199,17 +200,15 @@ class BsbbCrawler:
         
         # 创建 README.md 内容
         readme_content = "# 爬虫结果统计\n\n"
-        # 设置为北京时间 (UTC+8)
-        beijing_time = datetime.当前()。strftime('%Y-%m-%d %H:%M:%S')
-        readme_content += f"最后更新时间: {beijing_time} (北京时间)\n\n"
+        readme_content += f"最后更新时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
         readme_content += f"总节点数: {analysis_result['total']}\n\n"
         readme_content += f"去重后节点数: {analysis_result['unique']}\n\n"
         readme_content += f"重复节点数: {analysis_result['duplicates']}\n\n"
         
         readme_content += "## 按国家区域统计\n\n"
-        for country, count 在 sorted(analysis_result['countries'].items()):
+        for country, count in sorted(analysis_result['countries'].items()):
             country_name = country_code_to_name.get(country, country)
-            readme_content += f"- {country_name} ({country}): {count} 个节点\n"
+            readme_content += f"- {country_name}: {count} 个节点\n"
         
         readme_content += "\n## 按协议类型统计\n\n"
         for protocol, count in sorted(analysis_result['protocols'].items()):
