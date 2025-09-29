@@ -37,16 +37,16 @@ jobs:
         git commit -m "Update config.txt and README.md with latest crawler output" || echo "No changes to commit"
         git push
   del_runs:
-    needs: sync-worker
+    needs: run-crawler
     runs-on: ubuntu-latest
     permissions:
       actions: write
       contents: read
     steps:
-      - name: Delete workflow runs for remote repo
+      - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          repository: 'vampireisoves/bsbb.cc-Crawler'
+          repository: ${{ github.repository }}
           retain_days: 0
           keep_minimum_runs: 4
