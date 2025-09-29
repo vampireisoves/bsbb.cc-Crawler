@@ -23,11 +23,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
 
-    - name: Set locale
-      run: |
-        export LC_ALL=C.UTF-8
-        export LANG=C.UTF-8
-
     - name: Run crawler script
       run: |
         cd node-sp
