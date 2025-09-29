@@ -190,7 +190,7 @@ class BsbbCrawler:
         unique_nodes = list(set(node['raw'] for node in self.nodes))
         
         with open(filename, "w", encoding="utf-8") as f:
-            for node_raw 在 unique_nodes:
+            for node_raw in unique_nodes:
                 f.write(f"{node_raw}\n")
         print(f"去重后的节点信息已保存到 {filename}，共 {len(unique_nodes)} 个节点")
 
