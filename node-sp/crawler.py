@@ -36,7 +36,12 @@ class BsbbCrawler:
     def fetch_node_data(self):
         """获取节点数据"""
         try:
-            response = urllib.request.urlopen(self.node_file_url, timeout=10)
+            # 添加用户代理头信息，模拟浏览器访问
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            }
+            req = urllib.request.Request(self.node_file_url, headers=headers)
+            response = urllib.request.urlopen(req, timeout=10)
             data = response.read().decode('utf-8')
             return data.strip().split('\n')
         except Exception as e:
