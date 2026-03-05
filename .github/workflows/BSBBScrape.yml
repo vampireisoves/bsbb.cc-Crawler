@@ -1,0 +1,57 @@
+name: BSBB节点爬虫
+
+# 定时触发：每天北京时间 0:00, 6:00, 12:00, 18:00 运行
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+      
+      - name: 设置 Python 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests openpyxl
+      
+      - name: 运行爬虫
+        run: python BSBBScrape.py
+      
+      - name: 配置 Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+      
+      - name: 提交更改
+        run: |
+          git add node.xlsx b64config.json README.md
+          git diff --staged --quiet || git commit -m "更新节点数据 $(date '+%Y-%m-%d %H:%M:%S')"
+      
+      - name: 推送更改
+        run: git push
+
+  del_runs:
+    needs: scrape
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          retain_days: 0
+          keep_minimum_runs: 4
