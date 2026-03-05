@@ -27,10 +27,20 @@ jobs:
       run: |
         cd node-sp
         python crawler.py
+        # 添加诊断：列出生成的文件
+        echo "Files in current directory:"
+        ls -la
 
     - name: Encode output and save as config.txt
       run: |
         cd node-sp
+        # 检查文件是否存在
+        if [ ! -f nodes.txt ]; then
+          echo "ERROR: nodes.txt not found!"
+          echo "Available files:"
+          ls -la
+          exit 1
+        fi
         base64 -w 0 nodes.txt > ../config.txt
 
     - name: Commit and push changes
