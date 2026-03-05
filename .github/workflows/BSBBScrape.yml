@@ -1,10 +1,11 @@
 name: BSBB节点爬虫
 
 # 定时触发：北京时间每天 0:00, 6:00, 12:00, 18:00 运行
+# GitHub Actions 使用 UTC 时间，北京时间 = UTC + 8
+# 北京时间 0:00 = UTC 16:00, 6:00 = UTC 22:00, 12:00 = UTC 4:00, 18:00 = UTC 10:00
 on:
   schedule:
-    - cron: '0 0,6,12,18 * * *'
-    timezone: 'Asia/Shanghai'
+    - cron: '0 16,22,4,10 * * *'
   # 允许手动触发
   workflow_dispatch:
 
