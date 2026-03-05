@@ -12,7 +12,7 @@ import re
 import base64
 import json
 from urllib.parse import unquote
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 # 国家映射
 COUNTRY_MAP = {
@@ -513,8 +513,9 @@ def generate_readme():
         protocol = node['Protocol']
         protocol_stats[protocol] = protocol_stats.get(protocol, 0) + 1
     
-    # 获取当前时间
-    crawl_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    # 获取北京时间（UTC+8）
+    beijing_tz = timezone(timedelta(hours=8))
+    crawl_time = datetime.now(beijing_tz).strftime('%Y-%m-%d %H:%M:%S')
     
     # 生成README内容
     content = f"""# BSBB节点爬虫统计报告
@@ -522,7 +523,8 @@ def generate_readme():
 ## 爬取信息
 
 - **数据源**: https://bsbb.cc/
-- **爬取时间**: {crawl_time}
+- **爬取时间**: {crawl_time} (北京时间)
+- **时区**: UTC+8
 
 ## 爬虫结果统计
 
