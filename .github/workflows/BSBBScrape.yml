@@ -1,24 +1,28 @@
 name: BSBB节点爬虫
 
-# 定时触发：每天北京时间 0:00, 6:00, 12:00, 18:00 运行
+# 定时触发：每天北京时间 0:00, 6:00, 12:00, 18:00 运行（UTC时间：16:00, 22:00, 04:00, 10:00）
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 16,22,4,10 * * *'
   # 允许手动触发
   workflow_dispatch:
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
-          python-version: '3.14'
+          python-version: '3.12'
+          cache: 'pip'
       
       - name: 安装依赖
         run: |
@@ -39,7 +43,10 @@ jobs:
           git diff --staged --quiet || git commit -m "更新节点数据 $(date '+%Y-%m-%d %H:%M:%S')"
       
       - name: 推送更改
-        run: git push
+        run: |
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   del_runs:
     needs: scrape
@@ -51,7 +58,7 @@ jobs:
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2
         with:
-          token: ${{ secrets.KEY }}
-          repository: ${{ vampireisoves/BSBBScrape }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
           retain_days: 0
           keep_minimum_runs: 4
