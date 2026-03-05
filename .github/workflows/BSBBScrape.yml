@@ -30,8 +30,8 @@ jobs:
       
       - name: 配置 Git
         run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
+          git config --global user.name 'vampireisoves'
+          git config --global user.email '893751627@qq.com'
       
       - name: 提交更改
         run: |
@@ -51,7 +51,7 @@ jobs:
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.repository }}
+          token: ${{ secrets.Key }}
+          repository: ${{ https://github.com/vampireisoves/bsbb.cc-Crawler }}
           retain_days: 0
           keep_minimum_runs: 4
