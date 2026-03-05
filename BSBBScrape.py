@@ -523,7 +523,6 @@ def generate_readme():
 
 - **数据源**: https://bsbb.cc/
 - **爬取时间**: {crawl_time}
-- **数据文件**: node.xlsx
 
 ## 爬虫结果统计
 
@@ -557,21 +556,9 @@ def generate_readme():
         content += f"| {protocol} | {count} | {percentage:.1f}% |\n"
     
     content += f"""
-## 说明
+## 订阅链接
 
-- 节点信息包括：国家、协议类型、主机地址、节点名称、配置URL
-- 部分节点可能无法识别具体国家，标记为"Unknown"
-- 数据每24小时更新一次
-- 节点连通率约为90%
-
-## 使用方法
-
-运行爬虫脚本：
-```bash
-python BSBBScrape.py
-```
-
-生成的Excel文件将包含所有节点信息。
+https://github.com/vampireisoves/BSBBScrape/blob/main/b64config.json
 
 ---
 
@@ -635,12 +622,17 @@ def main():
         print(f"  Name: {node['Name']}")
         print(f"  URL: {node['URL'][:80]}...")
     
-    # 生成README.md
+# 生成README.md
     generate_readme()
+    
+    # 删除 node.xlsx 文件
+    import os
+    if os.path.exists('node.xlsx'):
+        os.remove('node.xlsx')
+        print("\n已删除 node.xlsx 文件")
     
     print("\n" + "=" * 60)
     print("爬取完成！结果已保存到:")
-    print("  - node.xlsx (节点详细信息)")
     print("  - b64config.json (Base64编码的节点配置)")
     print("  - README.md (统计报告)")
     print("=" * 60)
