@@ -43,7 +43,7 @@ jobs:
       
       - name: 提交更改
         run: |
-          git add node.xlsx b64config.json README.md
+          git add b64config.json README.md
           git diff --staged --quiet || git commit -m "更新节点数据 $(date '+%Y-%m-%d %H:%M:%S')"
       
       - name: 推送更改
